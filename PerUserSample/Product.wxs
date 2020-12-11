@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="PerUserSample" Language="1033" Version="1.0.0.0" Manufacturer="-" UpgradeCode="11f9390a-6ebf-4a28-85ba-a77b5189e670">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <UIRef Id="WixUI_Mondo" />
+
+    <Feature Id="ProductFeature" Title="PerUserSample" Level="1" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="AppDataFolder">
+        
+        <Directory Id="Something" Name="Something">
+          
+          <Component Feature="ProductFeature" Guid="{4056B724-97BC-486F-BB5E-EDEE1E5D530E}">
+
+            <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]\Test"
+                           Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+
+            <File Source="$(env.SystemRoot)\notepad.exe" />
+
+            <RemoveFolder Id="Something" Directory="Something" On="uninstall" />
+
+          </Component>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="PerUserSample" />
+      </Directory>
+
+    </Directory>
+
+  </Product>
+
+</Wix>
